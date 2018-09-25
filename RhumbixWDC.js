@@ -81,27 +81,21 @@ myConnector.getData = function(table, doneCallback) {
 	$.getJSON(apiCall, function(resp) {
         var feat = resp.results,
             tableData = [];
-	
-	
-	
-	
-
-	
 			
-		//Iterate the JSON object
-		var i = 0;
+//Iterate the JSON object
+	var i = 0;
 		
-		if (table.tableInfo.id == "timekeepingEntriesTable") {
-			for ( i = 0, len = results.length; i < len; i++) {
-				tableData.push({
-					"status": results[i].status,
-					"foreman": feat[i].foreman,
-					"previous": feat[i].previous,
-					"is_approved": feat[i].is_approved,
-					"end_date": feat[i].end_date,
-					"start_date": feat[i].start_date,
-					"employee": feat[i].employee,
-					"job_number": feat[i].job_number
+	if (table.tableInfo.id == "timekeepingEntriesTable") {
+		for ( i = 0, len = results.length; i < len; i++) {
+			tableData.push({
+				"status": results[i].status,
+				"foreman": feat[i].foreman,
+				"previous": feat[i].previous,
+				"is_approved": feat[i].is_approved,
+				"end_date": feat[i].end_date,
+				"start_date": feat[i].start_date,
+				"employee": feat[i].employee,
+				"job_number": feat[i].job_number
 				});
 			}	
 		}
