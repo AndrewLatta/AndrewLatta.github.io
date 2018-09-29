@@ -86,35 +86,35 @@ myConnector.getData = function(table, doneCallback) {
 	var i = 0;
 		
 	if (table.tableInfo.id == "timekeepingEntriesTable") {
-		for ( i = 0, len = response.length; i < len; i++) {
+		for ( i = 0, len = results.length; i < len; i++) {
 			tableData.push({
-				"status": response[i].status,
-				"foreman": response[i].foreman,
-				"previous": response[i].previous,
-				"is_approved": response[i].is_approved,
-				"end_date": response[i].end_date,
-				"start_date": response[i].start_date,
-				"employee": response[i].employee,
-				"job_number": response[i].job_number
+				"status": results[i].status,
+				"foreman": results[i].foreman,
+				"previous": results[i].previous,
+				"is_approved": results[i].is_approved,
+				"end_date": results[i].end_date,
+				"start_date": results[i].start_date,
+				"employee": results[i].employee,
+				"job_number": results[i].job_number
 				});
 			}	
 		}
 		
 		if (table.tableInfo.id == "projectTable") {
-			for (i = 0, len = feat.length; i < len; i++) {
+			for (i = 0, len = results.length; i < len; i++) {
 				tableData.push({
-					"job_number": response[i].job_number,
-					"name": response[i].name
+					"job_number": results[i].job_number,
+					"name": results[i].name
 				});
 				
 			}
 		}
 		
 		if (table.tableInfo.id == "costCodeTable") {
-			for (i = 0, len = feat.length; i < len; i++) {
+			for (i = 0, len = results.length; i < len; i++) {
 				tableData.push({
-					"code": response[i].code,
-					"job_number": response[i].job_number
+					"code": results[i].code,
+					"job_number": results[i].job_number
 				});
 			}
 		}
