@@ -86,16 +86,16 @@ myConnector.getData = function(table, doneCallback) {
 	var i = 0;
 		
 	if (table.tableInfo.id == "timekeepingEntriesTable") {
-		for ( i = 0, len = results.length; i < len; i++) {
+		for ( i = 0, len = response.length; i < len; i++) {
 			tableData.push({
-				"status": results[i].status,
-				"foreman": feat[i].foreman,
-				"previous": feat[i].previous,
-				"is_approved": feat[i].is_approved,
-				"end_date": feat[i].end_date,
-				"start_date": feat[i].start_date,
-				"employee": feat[i].employee,
-				"job_number": feat[i].job_number
+				"status": response[i].status,
+				"foreman": response[i].foreman,
+				"previous": response[i].previous,
+				"is_approved": response[i].is_approved,
+				"end_date": response[i].end_date,
+				"start_date": response[i].start_date,
+				"employee": response[i].employee,
+				"job_number": response[i].job_number
 				});
 			}	
 		}
@@ -103,8 +103,8 @@ myConnector.getData = function(table, doneCallback) {
 		if (table.tableInfo.id == "projectTable") {
 			for (i = 0, len = feat.length; i < len; i++) {
 				tableData.push({
-					"job_number": feat[i].job_number,
-					"name": feat[i].name
+					"job_number": response[i].job_number,
+					"name": response[i].name
 				});
 				
 			}
@@ -113,8 +113,8 @@ myConnector.getData = function(table, doneCallback) {
 		if (table.tableInfo.id == "costCodeTable") {
 			for (i = 0, len = feat.length; i < len; i++) {
 				tableData.push({
-					"code": feat[i].code,
-					"job_number": feat[i].job_number
+					"code": response[i].code,
+					"job_number": response[i].job_number
 				});
 			}
 		}
@@ -126,7 +126,7 @@ myConnector.getData = function(table, doneCallback) {
 
 myConnector.init = function(initCallback) {  
 	tableau.authType = tableau.authTypeEnum.custom;
-	tableau.connectionName = "Rhumbix WDC"
+	tableau.connectionName = "Rhumbix WDC";
 	
 	var settings = {
 		"async": true,
