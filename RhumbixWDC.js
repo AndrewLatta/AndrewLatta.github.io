@@ -94,8 +94,8 @@ myConnector.getData = function (table, doneCallback) {
 	
 	
 	// $.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
-        // var feat = response.results,
-        // var tableData = [];
+        var feat = response.results,
+        var tableData = [];
 			
 //Iterate the JSON object
 	var i = 0;
@@ -195,8 +195,8 @@ myConnector.init = function(initCallback) {
 	$(document).ready(function () {
 		
 	$("#submitButton").click(function() {
-			var showData = $('#show-data')
-			// myConnector.init = function(initCallback) {
+			var showData = $('#show-data');
+			myConnector.init = function(initCallback) {
 			tableau.connectionName = "Rhumbix WDC"; //This will be the data source name in Tableau
 			tableau.submit(); //This sends the connector object to Tableau
 		};
