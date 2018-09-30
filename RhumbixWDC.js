@@ -73,7 +73,7 @@ myConnector.getSchema = function (schemaCallback) {
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
-myConnector.getData = function (table, doneCallback) {
+myConnector.getData = function (table, DataDoneCallback) {
 	
 	var settings = {
 		"async": true,
@@ -134,7 +134,7 @@ myConnector.getData = function (table, doneCallback) {
 		}
 		
 		table.appendRows(tableData);
-		doneCallback();
+		DataDoneCallback();
 };
 
 myConnector.init = function(initCallback) {  
