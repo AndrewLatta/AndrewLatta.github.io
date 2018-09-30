@@ -74,9 +74,28 @@ myConnector.getSchema = function (schemaCallback) {
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
-	$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
-        var feat = response.results,
-        var tableData = [];
+	
+	var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
+		"method": "GET",
+		"headers": {
+			"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+			"Cache-Control": "no-cache",
+			"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
+		}
+	};
+	
+	$.ajax(settings).done(function (response) {
+		console.log(response);
+	});
+	
+	
+	
+	// $.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
+        // var feat = response.results,
+        // var tableData = [];
 			
 //Iterate the JSON object
 	var i = 0;
@@ -122,22 +141,6 @@ myConnector.getData = function (table, doneCallback) {
 myConnector.init = function(initCallback) {  
 	tableau.authType = tableau.authTypeEnum.custom;
 	tableau.connectionName = "Rhumbix WDC";
-	
-	var settings = {
-		"async": true,
-		"crossDomain": true,
-		"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
-		"method": "GET",
-		"headers": {
-			"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-			"Cache-Control": "no-cache",
-			"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
-		}
-	};
-	
-		$.ajax(settings).done(function (response) {
-		console.log(response);
-	});
 	
 	tableau.log("phase: " + tableau.phase);
 		
@@ -191,8 +194,9 @@ myConnector.init = function(initCallback) {
 // Create event listeners for when the user submits the form
 	$(document).ready(function () {
 		
-	$("#submitButton").on("click", function() {
-			myConnector.init = function(initCallback) {
+	$("#submitButton").click(function() {
+			var showData = $('#show-data')
+			// myConnector.init = function(initCallback) {
 			tableau.connectionName = "Rhumbix WDC"; //This will be the data source name in Tableau
 			tableau.submit(); //This sends the connector object to Tableau
 		};
