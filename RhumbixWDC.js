@@ -73,48 +73,43 @@ myConnector.getSchema = function (schemaCallback) {
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
-myConnector.getData = function(table, doneCallback) {
-	var dateObj = JSON.parse(tableau.connectionData),
-		dateString = "start_time=" + dateObj.start_date + "&end_time" + dateObj.end_date,
-		apiCall = "https://prod.rhumbix.com/public_api/v2/" + dateString;
-		
-	$.getJSON(apiCall, function(resp) {
-        var feat = resp.results,
-            tableData = [];
+myConnector.getData = function (table, doneCallback) {
+	$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
+        var feat = response.results,
+        var tableData = [];
 			
 //Iterate the JSON object
 	var i = 0;
 		
 	if (table.tableInfo.id == "timekeepingEntriesTable") {
-		for ( i = 0, len = results.length; i < len; i++) {
+		for ( i = 0, len = feat.length; i < len; i++) {
 			tableData.push({
-				"status": results[i].status,
-				"foreman": results[i].foreman,
-				"previous": results[i].previous,
-				"is_approved": results[i].is_approved,
-				"end_date": results[i].end_date,
-				"start_date": results[i].start_date,
-				"employee": results[i].employee,
-				"job_number": results[i].job_number
+				"status": feat[i].status,
+				"foreman": feat[i].foreman,
+				"is_approved": feat[i].is_approved,
+				"end_time": feat[i].end_time,
+				"start_time": feat[i].start_time,
+				"employee": feat[i].employee,
+				"job_number": feat[i].job_number
 				});
 			}	
 		}
 		
 		if (table.tableInfo.id == "projectTable") {
-			for (i = 0, len = results.length; i < len; i++) {
+			for (i = 0, len = feat.length; i < len; i++) {
 				tableData.push({
-					"job_number": results[i].job_number,
-					"name": results[i].name
+					"job_number": feat[i].job_number,
+					"name": feat[i].name
 				});
 				
 			}
 		}
 		
 		if (table.tableInfo.id == "costCodeTable") {
-			for (i = 0, len = results.length; i < len; i++) {
+			for (i = 0, len = feat.length; i < len; i++) {
 				tableData.push({
-					"code": results[i].code,
-					"job_number": results[i].job_number
+					"code": feat[i].code,
+					"job_number": feat[i].job_number
 				});
 			}
 		}
