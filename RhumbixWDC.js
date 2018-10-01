@@ -73,7 +73,7 @@ myConnector.getSchema = function (schemaCallback) {
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
-myConnector.getData = function (table, DataDoneCallback) {
+myConnector.getData = function (table, doneCallback) {
 	
 	var settings = {
 		"async": true,
@@ -94,7 +94,7 @@ myConnector.getData = function (table, DataDoneCallback) {
 	
 	
 	// $.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
-        var feat = response.results,
+        var feat = response.results;
         var tableData = [];
 			
 //Iterate the JSON object
@@ -134,7 +134,7 @@ myConnector.getData = function (table, DataDoneCallback) {
 		}
 		
 		table.appendRows(tableData);
-		DataDoneCallback();
+		doneCallback();
 };
 
 myConnector.init = function(initCallback) {  
