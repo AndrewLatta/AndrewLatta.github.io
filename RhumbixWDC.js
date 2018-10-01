@@ -78,6 +78,7 @@ myConnector.getData = function (table, doneCallback) {
 	var settings = {
 		"async": true,
 		"crossDomain": true,
+		"Access-Control-Allow-Credentials": true,
 		"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 		"method": "GET",
 		"headers": {
