@@ -114,25 +114,6 @@ myConnector.getSchema = function (schemaCallback) {
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
 	
-	var settings = {
-		"async": true,
-		"crossDomain": true,
-		"Access-Control-Allow-Credentials": true,
-		"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
-		"method": "GET",
-		"headers": {
-			"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-			"Cache-Control": "no-cache",
-			"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
-		}
-	};
-	
-	$.ajax(settings).done(function (response) {
-		console.log(response);
-	});
-	
-	
-	
 	// $.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
         var feat = response.results;
         var tableData = [];
@@ -234,6 +215,23 @@ myConnector.init = function(initCallback) {
 	$(document).ready(function () {
 		
 	$("#submitButton").click(function() {
+		
+		var settings = {
+			"async": true,
+			"crossDomain": true,
+			"Access-Control-Allow-Credentials": true,
+			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
+			"method": "GET",
+			"headers": {
+				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+				"Cache-Control": "no-cache",
+				"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
+				}
+				};
+	
+	$.ajax(settings).done(function (response) {
+		console.log(response);
+	});
 			var showData = $('#show-data');
 			myConnector.init = function(initCallback) {
 			tableau.connectionName = "Rhumbix WDC"; //This will be the data source name in Tableau
