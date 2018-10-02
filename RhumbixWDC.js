@@ -224,7 +224,7 @@ myConnector.init = function(initCallback) {
 			"method": "GET",
 			"headers": {
 				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-				"Cache-Control": "no-cache",
+				"Cache-Control": no-cache,
 				"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
 				}
 				};
