@@ -220,7 +220,7 @@ myConnector.init = function(initCallback) {
 			"async": "true",
 			"crossDomain": "true",
 			"Access-Control-Allow-Credentials": "true",
-			"Access-Control-Allow-Origin": "https://andrewlatta.github.io/" 
+			"Access-Control-Allow-Origin": "https://andrewlatta.github.io/", 
 			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 			"method": "GET",
 			"headers": {
