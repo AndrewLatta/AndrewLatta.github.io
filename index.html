@@ -49,15 +49,16 @@
 		</div>
 	</div>
 	
-	<script>
-		var url = 'https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1';
-		$.get(url)
-			.done(function(data){
-				$('body').text(data.response);
-			}).fail(function(){
-				$('body').text('Request to '+url+' failed!');
-			});
-	</script>
+	// <script>
+		// var url = 'https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1';
+		
+		// $.get(url)
+			// .done(function(data){
+				// $('body').text(data.response);
+			// }).fail(function(){
+				// $('body').text('Request to '+url+' failed!');
+			//});
+	// </script>
 	
 	<script>
   var cors_api_url = 'https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1';
