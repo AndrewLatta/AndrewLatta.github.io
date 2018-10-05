@@ -156,7 +156,7 @@ myConnector.getData = function (table, doneCallback) {
 		
 		table.appendRows(tableData);
 		doneCallback(myConnector);
-};
+)};
 
 myConnector.init = function(initCallback) {  
 	tableau.authType = tableau.authTypeEnum.custom;
