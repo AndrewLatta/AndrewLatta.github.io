@@ -114,7 +114,7 @@ myConnector.getSchema = function (schemaCallback) {
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
 	
-	// $.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
+	$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
         var feat = response.results;
         var tableData = [];
 			
@@ -155,7 +155,7 @@ myConnector.getData = function (table, doneCallback) {
 		}
 		
 		table.appendRows(tableData);
-		doneCallback();
+		doneCallback(myConnector);
 };
 
 myConnector.init = function(initCallback) {  
@@ -164,14 +164,14 @@ myConnector.init = function(initCallback) {
 	
 	tableau.log("phase: " + tableau.phase);
 		
-	initCallback();
+	initCallback(myConnector);
 	
 	if (tableau.phase == tableau.phaseEnum.authPhase || tableau.phase == tableau.phaseEnum.interactivePhase) {
             var accessToken = tableau.password;
             if (accessToken && (accessToken.length > 0)) {
                 // If we have an access token, we are done with auth.
                 tableau.log("have access token; calling submit()");
-                tableau.submit();
+                tableau.submit(myConnector);
             } else {
                 // If we have this cookie, then we are being called back after
                 // the sign-in page and we need to exchange a request
