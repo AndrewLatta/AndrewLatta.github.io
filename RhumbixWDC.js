@@ -5,8 +5,8 @@
 var myConnector = tableau.makeConnector();
 	
 errorMethod = function(response) {
-		tableau.abortWithError(JSON.stringify(response))
-    }
+		tableau.abortWithError(JSON.stringify(response));
+    };
 	
 	if (!Object.assign) {
 	  Object.defineProperty(Object, 'assign', {
@@ -39,7 +39,7 @@ errorMethod = function(response) {
 		  return to;
 		}
 	  });
-	}
+	};
 
 var options = new Object();
 
@@ -155,8 +155,9 @@ myConnector.getData = function (table, doneCallback) {
 		}
 		
 		table.appendRows(tableData);
+	)};
 		doneCallback(myConnector);
-)};
+};	
 
 myConnector.init = function(initCallback) {  
 	tableau.authType = tableau.authTypeEnum.custom;
