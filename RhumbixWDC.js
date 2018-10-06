@@ -114,7 +114,7 @@ myConnector.getSchema = function (schemaCallback) {
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
 	
-	$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
+	$.getJSON("http://cors.io/?https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
         var feat = response.results;
         var tableData = [];
 			
