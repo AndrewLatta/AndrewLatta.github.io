@@ -14,7 +14,6 @@ errorMethod = function(response) {
 		configurable: true,
 		writable: true,
 		value: function(target) {
-		  'use strict';
 		  if (target === undefined || target === null) {
 			throw new TypeError('Cannot convert first argument to object');
 		  }
