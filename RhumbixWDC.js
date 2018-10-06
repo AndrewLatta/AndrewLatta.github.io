@@ -104,19 +104,40 @@ myConnector.getSchema = function (schemaCallback) {
 		alias: "Cost Codes",
 		columns: costCode_cols
 	};
-
-
-	schemaCallback([timekeepingEntriesTable, projectTable, costCodeTable]);
 };
+	schemaCallback([timekeepingEntriesTable, projectTable, costCodeTable]);
+
 
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
 	
-	$.getJSON("https://crossorigin.me/https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
-        var feat = response.results;
-        var tableData = [];
+	var settings = {
+			"async": "true",
+			"crossDomain": "true",
+			"Access-Control-Allow-Credentials": "true",
+			"Access-Control-Allow-Origin": "https://andrewlatta.github.io/", 
+			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
+			"method": "GET",
+			"headers": {
+				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+				"Cache-Control": "no-cache",
+				"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf",
+				"crossDomain": "true",
+				"Access-Control-Allow-Credentials": "true",
+				"Access-Control-Allow-Origin": "https://andrewlatta.github.io/",
+				}
+				};
+	
+	$.ajax(settings).done(function (response) {
+		$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
+        	var feat = response.results;
+        	var tableData = [];
+	});
+	});
+	
+	
 			
 //Iterate the JSON object
 	var i = 0;
@@ -155,7 +176,6 @@ myConnector.getData = function (table, doneCallback) {
 		}
 		
 		table.appendRows(tableData);
-	});
 	};
 		doneCallback(myConnector);
 
@@ -165,7 +185,7 @@ myConnector.init = function(initCallback) {
 	
 	tableau.log("phase: " + tableau.phase);
 		
-	initCallback(myConnector);
+	initCallback();
 	
 	if (tableau.phase == tableau.phaseEnum.authPhase || tableau.phase == tableau.phaseEnum.interactivePhase) {
             var accessToken = tableau.password;
@@ -207,7 +227,7 @@ myConnector.init = function(initCallback) {
 		
 
 //4:-------------------------------------------------------------------------------------------
-	tableau.registerConnector(myConnector);
+	tableau.registerConnector();
 	window._tableau.triggerInitialization();
 
 
@@ -216,27 +236,6 @@ myConnector.init = function(initCallback) {
 	$(document).ready(function () {
 		
 	$("#submitButton").click(function() {
-		
-		var settings = {
-			"async": "true",
-			"crossDomain": "true",
-			"Access-Control-Allow-Credentials": "true",
-			"Access-Control-Allow-Origin": "https://andrewlatta.github.io/", 
-			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
-			"method": "GET",
-			"headers": {
-				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-				"Cache-Control": "no-cache",
-				"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf",
-				"crossDomain": "true",
-				"Access-Control-Allow-Credentials": "true",
-				"Access-Control-Allow-Origin": "https://andrewlatta.github.io/",
-				}
-				};
-	
-	$.ajax(settings).done(function (response) {
-		console.log(response);
-	});
 			var showData = $('#show-data');
 			myConnector.init = function(initCallback) {
 			tableau.connectionName = "Rhumbix WDC"; //This will be the data source name in Tableau
@@ -247,3 +246,26 @@ myConnector.init = function(initCallback) {
 
 
 });
+	// $(document).ready(function(){
+		// $("#submitButton").click(function(){
+			
+			// var settings = {
+				// "async": true,
+				// "Accept": JSON,
+				// "Access-Control-Allow-Origin": "*",
+				// "Access-Control-Allow-Headers": true,
+				// "crossDomain": true,
+				// "url": "https://crossorigin.me/https://platform.rhumbix.com/public_api/v2/timekeeping_entries/",
+				// "method": "GET",
+				// "headers": {
+					// "x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+					// "Cache-Control": "no-cache",
+					// "Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
+					// }
+					// };
+	
+	// $.ajax(settings).done(function (response) {
+		// console.log(response);
+		// });
+	// });
+// });
