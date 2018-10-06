@@ -14,6 +14,7 @@ errorMethod = function(response) {
 		configurable: true,
 		writable: true,
 		value: function(target) {
+		  'use strict';
 		  if (target === undefined || target === null) {
 			throw new TypeError('Cannot convert first argument to object');
 		  }
@@ -154,9 +155,9 @@ myConnector.getData = function (table, doneCallback) {
 		}
 		
 		table.appendRows(tableData);
-	)};
+	});
+	};
 		doneCallback(myConnector);
-};	
 
 myConnector.init = function(initCallback) {  
 	tableau.authType = tableau.authTypeEnum.custom;
