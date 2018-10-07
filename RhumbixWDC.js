@@ -193,17 +193,13 @@ myConnector.init = function(initCallback) {
 //5:-------------------------------------------------------------------------------------------
 // Create event listeners for when the user submits the form
 	$(document).ready(function () {
-		
 	$("#submitButton").click(function() {
-			var showData = $('#show-data');
-			myConnector.init = function(initCallback) {
+			tableau.connectionData = JSON.stringify();
 			tableau.connectionName = "Rhumbix WDC"; //This will be the data source name in Tableau
 			tableau.submit(); //This sends the connector object to Tableau
-		};
+			});
+		});
 	});
-});
-
-});
 	// $(document).ready(function(){
 		// $("#submitButton").click(function(){
 			
