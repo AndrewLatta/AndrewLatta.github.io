@@ -186,7 +186,7 @@ myConnector.init = function(initCallback) {
 		
 
 //4:-------------------------------------------------------------------------------------------
-	
+	tableau.registerConnector(myConnector);
 	window._tableau.triggerInitialization();
 
 
@@ -203,7 +203,6 @@ myConnector.init = function(initCallback) {
 	});
 });
 
-tableau.registerConnector(myConnector);
 });
 	// $(document).ready(function(){
 		// $("#submitButton").click(function(){
