@@ -4,42 +4,42 @@
 // Create the connector object
 var myConnector = tableau.makeConnector();
 	
-errorMethod = function(response) {
-		tableau.abortWithError(JSON.stringify(response));
-    };
-	
-	if (!Object.assign) {
-	  Object.defineProperty(Object, 'assign', {
-		enumerable: false,
-		configurable: true,
-		writable: true,
-		value: function(target) {
-		  'use strict';
-		  if (target === undefined || target === null) {
-			throw new TypeError('Cannot convert first argument to object');
-		  }
-
-		  var to = Object(target);
-		  for (var i = 1; i < arguments.length; i++) {
-			var nextSource = arguments[i];
-			if (nextSource === undefined || nextSource === null) {
-			  continue;
-			}
-			nextSource = Object(nextSource);
-
-			var keysArray = Object.keys(Object(nextSource));
-			for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-			  var nextKey = keysArray[nextIndex];
-			  var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-			  if (desc !== undefined && desc.enumerable) {
-				to[nextKey] = nextSource[nextKey];
-			  }
-			}
-		  }
-		  return to;
-		}
-	  });
-	};
+// errorMethod = function(response) {
+// 		tableau.abortWithError(JSON.stringify(response));
+//     };
+// 
+// 	if (!Object.assign) {
+// 	  Object.defineProperty(Object, 'assign', {
+// 		enumerable: false,
+// 		configurable: true,
+// 		writable: true,
+// 		value: function(target) {
+// 		  'use strict';
+// 		  if (target === undefined || target === null) {
+// 			throw new TypeError('Cannot convert first argument to object');
+// 		  }
+// 
+// 		  var to = Object(target);
+// 		  for (var i = 1; i < arguments.length; i++) {
+// 			var nextSource = arguments[i];
+// 			if (nextSource === undefined || nextSource === null) {
+// 			  continue;
+// 			}
+// 			nextSource = Object(nextSource);
+// 
+// 			var keysArray = Object.keys(Object(nextSource));
+// 			for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+// 			  var nextKey = keysArray[nextIndex];
+// 			  var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+// 			  if (desc !== undefined && desc.enumerable) {
+// 				to[nextKey] = nextSource[nextKey];
+// 			  }
+// 			}
+// 		  }
+// 		  return to;
+// 		}
+// 	  });
+// 	};
 
 var options = new Object();
 
@@ -117,84 +117,79 @@ myConnector.getData = function (table, doneCallback) {
 	
 			
 //Iterate the JSON object
-	var i = 0;
-		
-	if (table.tableInfo.id == "timekeepingEntriesTable") {
-		for ( i = 0, len = feat.length; i < len; i++) {
+	for ( i = 0, len = feat.length; i < len; i++) {
 			tableData.push({
-				"status": feat[i].status,
-				"foreman": feat[i].foreman,
-				"is_approved": feat[i].is_approved,
-				"end_time": feat[i].end_time,
-				"start_time": feat[i].start_time,
-				"employee": feat[i].employee,
-				"job_number": feat[i].job_number
+					"status": feat[i].status,
+					"foreman": feat[i].foreman,
+					"is_approved": feat[i].is_approved,
+					"end_time": feat[i].end_time,
+					"start_time": feat[i].start_time,
+					"employee": feat[i].employee,
+					"job_number": feat[i].job_number
 				});
-			}	
-		}
+			}
 		
 		table.appendRows(tableData);
-		doneCallback(myConnector);
+		doneCallback();
 	};
 		
 
-myConnector.init = function(initCallback) {  
-	tableau.authType = tableau.authTypeEnum.custom;
-	tableau.connectionName = "Rhumbix WDC";
-	
-	tableau.log("phase: " + tableau.phase);
-		
-	initCallback();
-	
-	if (tableau.phase == tableau.phaseEnum.authPhase || tableau.phase == tableau.phaseEnum.interactivePhase) {
-            var accessToken = tableau.password;
-            if (accessToken && (accessToken.length > 0)) {
-                // If we have an access token, we are done with auth.
-                tableau.log("have access token; calling submit()");
-                tableau.submit(myConnector);
-            } else {
-                // If we have this cookie, then we are being called back after
-                // the sign-in page and we need to exchange a request
-                // token for an access token.
-                tableau.log("no access token");
-                var oauthTokenSecret = Cookies.get("oauth_token_secret");
-                if (oauthTokenSecret && (oauthTokenSecret.length > 0)) {
-                    // If redirected here from the oauth sign-in page, there will be an
-                    // oauth_token query param on our URL.
-                    tableau.log("found cookie; calling getAccessToken()");
-                    var params = parseQueryParams(window.location.href);
-                    var accessToken = getAccessToken(params);
-                    var token = {
-                        public: accessToken.oauth_token,
-                        secret: accessToken.oauth_token_secret,
-                    };
-
-                    tableau.username = decodeURIComponent(accessToken.user_nsid);
-                    tableau.password = JSON.stringify(token);
-                    tableau.submit();
-                } else {
-                    // We don't have an access token and we aren't being called
-                    // back from sign-in page, we need to navigate to the
-                    // sign-in page.
-                    tableau.log("did not find cookie; redirecting to sign-in page");
-                    var oauthUrl = getOauthUrl();
-                    window.location.href = oauthUrl;
-				}
-			}
-		}
-	};
+// myConnector.init = function(initCallback) {  
+// 	tableau.authType = tableau.authTypeEnum.custom;
+// 	tableau.connectionName = "Rhumbix WDC";
+// 
+// 	tableau.log("phase: " + tableau.phase);
+// 
+// 	initCallback();
+// 
+// 	if (tableau.phase == tableau.phaseEnum.authPhase || tableau.phase == tableau.phaseEnum.interactivePhase) {
+//             var accessToken = tableau.password;
+//             if (accessToken && (accessToken.length > 0)) {
+//                 // If we have an access token, we are done with auth.
+//                 tableau.log("have access token; calling submit()");
+//                 tableau.submit(myConnector);
+//             } else {
+//                 // If we have this cookie, then we are being called back after
+//                 // the sign-in page and we need to exchange a request
+//                 // token for an access token.
+//                 tableau.log("no access token");
+//                 var oauthTokenSecret = Cookies.get("oauth_token_secret");
+//                 if (oauthTokenSecret && (oauthTokenSecret.length > 0)) {
+//                     // If redirected here from the oauth sign-in page, there will be an
+//                     // oauth_token query param on our URL.
+//                     tableau.log("found cookie; calling getAccessToken()");
+//                     var params = parseQueryParams(window.location.href);
+//                     var accessToken = getAccessToken(params);
+//                     var token = {
+//                         public: accessToken.oauth_token,
+//                         secret: accessToken.oauth_token_secret,
+//                     };
+// 
+//                     tableau.username = decodeURIComponent(accessToken.user_nsid);
+//                     tableau.password = JSON.stringify(token);
+//                     tableau.submit();
+//                 } else {
+//                     // We don't have an access token and we aren't being called
+//                     // back from sign-in page, we need to navigate to the
+//                     // sign-in page.
+//                     tableau.log("did not find cookie; redirecting to sign-in page");
+//                     var oauthUrl = getOauthUrl();
+//                     window.location.href = oauthUrl;
+// 				}
+// 			}
+// 		}
+// 	};
 		
 
 //4:-------------------------------------------------------------------------------------------
 	tableau.registerConnector(myConnector);
-	window._tableau.triggerInitialization();
+	// window._tableau.triggerInitialization();
 
 
 //5:-------------------------------------------------------------------------------------------
 // Create event listeners for when the user submits the form
 	$(document).ready(function () {
 	$("#submitButton").click(function() {
-			tableau.connectionData = JSON.stringify();
 			tableau.connectionName = "Rhumbix WDC"; //This will be the data source name in Tableau
 			tableau.submit(); //This sends the connector object to Tableau
 			});
