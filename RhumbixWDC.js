@@ -46,6 +46,8 @@ var options = new Object();
 //2:-------------------------------------------------------------------------------------------
 // Define the schema
 myConnector.getSchema = function (schemaCallback) {
+	var schema = [];
+	
 	var timekeepingEntries_cols = [{
 		id: "status",
 		dataType: tableau.dataTypeEnum.string
@@ -77,12 +79,19 @@ myConnector.getSchema = function (schemaCallback) {
 		columns: timekeepingEntries_cols
 	};
 	
-	schemaCallback([timekeepingEntriesTable]);
+	schema.push(timekeepingEntriesTable);
+	
+	schemaCallback([schema]);
 };
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
+	var dataToReturn = [];
+	var hasMoreData = false;
+	
+	var accessToken = tableau.password;
+	//var connectionUri = getRhumbixURI(accessToken);
 	
 	var settings = {
 			"async": "true",
@@ -90,13 +99,13 @@ myConnector.getData = function (table, doneCallback) {
 			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 			"method": "GET",
 			"headers": {
-				"Accept": "application/json, application/json",
+					"Accept": "application/json, application/json",
     				"Content-Type": "application/json",
     				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
     				"Cache-Control": "no-cache",
     				"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
-				}
-			}
+						}
+					}
 	
 	$.ajax(settings).done(function (response) {
 		$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
@@ -122,25 +131,6 @@ myConnector.getData = function (table, doneCallback) {
 				"job_number": feat[i].job_number
 				});
 			}	
-		}
-	
-		if (table.tableInfo.id == "projectTable") {
-			for (i = 0, len = feat.length; i < len; i++) {
-				tableData.push({
-					"job_number": feat[i].job_number,
-					"name": feat[i].name
-				});
-				
-			}
-		}
-		
-		if (table.tableInfo.id == "costCodeTable") {
-			for (i = 0, len = feat.length; i < len; i++) {
-				tableData.push({
-					"code": feat[i].code,
-					"job_number": feat[i].job_number
-				});
-			}
 		}
 		
 		table.appendRows(tableData);
@@ -196,7 +186,7 @@ myConnector.init = function(initCallback) {
 		
 
 //4:-------------------------------------------------------------------------------------------
-	tableau.registerConnector();
+	
 	window._tableau.triggerInitialization();
 
 
@@ -213,7 +203,7 @@ myConnector.init = function(initCallback) {
 	});
 });
 
-
+tableau.registerConnector(myConnector);
 });
 	// $(document).ready(function(){
 		// $("#submitButton").click(function(){
