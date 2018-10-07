@@ -56,10 +56,10 @@ myConnector.getSchema = function (schemaCallback) {
 		id: "is_approved",
 		dataType: tableau.dataTypeEnum.boolean
 	}, {
-		id: "end_date",
+		id: "end_time",
 		dataType: tableau.dataTypeEnum.string
 	}, {
-		id: "start_date",
+		id: "start_time",
 		dataType: tableau.dataTypeEnum.string
 	}, {
 		id: "employee",
@@ -67,44 +67,17 @@ myConnector.getSchema = function (schemaCallback) {
 	}, {
 		id: "job_number",
 		dataType: tableau.dataTypeEnum.int
-	}	
-	];
+	}, {
+		id: "cost_code",
+		dataType: tableau.dataTypeEnum.int
+	}];
 	var timekeepingEntriesTable = {
 		id: "Timekeeping",
 		alias: "Timekeeping Entries",
 		columns: timekeepingEntries_cols
 	};
 	
-	
-	var project_cols = [{
-		id: "job_number",
-		dataType: tableau.dataTypeEnum.string
-	}, {
-		id: "name",
-		dataType: tableau.dataTypeEnum.string
-	}
-	];
-	var projectTable = {
-		id: "project",
-		alias: "Project",
-		columns: project_cols
-	};
-	
-	
-	var costCode_cols = [{
-		id: "code",
-		dataType: tableau.dataTypeEnum.string
-	}, {
-		id: "job_number",
-		dataType: tableau.dataTypeEnum.string
-	}
-	];
-	var costCodeTable = {
-		id: "CostCode",
-		alias: "Cost Codes",
-		columns: costCode_cols
-	};
-	schemaCallback([timekeepingEntriesTable, projectTable, costCodeTable]);
+	schemaCallback([timekeepingEntriesTable]);
 };
 
 //3:-------------------------------------------------------------------------------------------
@@ -114,19 +87,16 @@ myConnector.getData = function (table, doneCallback) {
 	var settings = {
 			"async": "true",
 			"crossDomain": "true",
-			"Access-Control-Allow-Credentials": "true",
-			"Access-Control-Allow-Origin": "https://andrewlatta.github.io/", 
 			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 			"method": "GET",
 			"headers": {
-				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-				"Cache-Control": "no-cache",
-				"Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf",
-				"crossDomain": "true",
-				"Access-Control-Allow-Credentials": "true",
-				"Access-Control-Allow-Origin": "https://andrewlatta.github.io/",
+				"Accept": "application/json, application/json",
+    				"Content-Type": "application/json",
+    				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+    				"Cache-Control": "no-cache",
+    				"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
 				}
-				};
+			}
 	
 	$.ajax(settings).done(function (response) {
 		$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
@@ -153,7 +123,7 @@ myConnector.getData = function (table, doneCallback) {
 				});
 			}	
 		}
-		
+	
 		if (table.tableInfo.id == "projectTable") {
 			for (i = 0, len = feat.length; i < len; i++) {
 				tableData.push({
@@ -174,8 +144,9 @@ myConnector.getData = function (table, doneCallback) {
 		}
 		
 		table.appendRows(tableData);
-	};
 		doneCallback(myConnector);
+	};
+		
 
 myConnector.init = function(initCallback) {  
 	tableau.authType = tableau.authTypeEnum.custom;
