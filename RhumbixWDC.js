@@ -104,10 +104,8 @@ myConnector.getSchema = function (schemaCallback) {
 		alias: "Cost Codes",
 		columns: costCode_cols
 	};
-};
 	schemaCallback([timekeepingEntriesTable, projectTable, costCodeTable]);
-
-
+};
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
