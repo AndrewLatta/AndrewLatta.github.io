@@ -203,7 +203,7 @@ myConnector.getData = function (table, doneCallback) {
 			tableau.submit(); //This sends the connector object to Tableau
 			});
 		});
-	});
+	})();
 	// $(document).ready(function(){
 		// $("#submitButton").click(function(){
 			
