@@ -183,6 +183,15 @@ myConnector.getData = function (table, doneCallback) {
 
 //4:-------------------------------------------------------------------------------------------
 	tableau.registerConnector(myConnector);
+	
+	if (!!window.tableauVersionBootstrap) {
+  		window._tableau.triggerInitialization();
+		}
+	if (!window.tableauVersionBootstrap) {
+  		var DOMContentLoaded_event = window.document.createEvent("Event")
+            	DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true)
+            	window.document.dispatchEvent(DOMContentLoaded_event)
+		{
 	// window._tableau.triggerInitialization();
 
 
