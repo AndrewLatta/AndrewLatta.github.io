@@ -41,7 +41,7 @@ var myConnector = tableau.makeConnector();
 // 	  });
 // 	};
 
-var options = new Object();
+//	var options = new Object();
 
 //2:-------------------------------------------------------------------------------------------
 // Define the schema
@@ -87,10 +87,10 @@ myConnector.getSchema = function (schemaCallback) {
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
-	var dataToReturn = [];
-	var hasMoreData = false;
+	//var dataToReturn = [];
+	//var hasMoreData = false;
 	
-	var accessToken = tableau.password;
+	//var accessToken = tableau.password;
 	//var connectionUri = getRhumbixURI(accessToken);
 	
 	var settings = {
@@ -100,17 +100,17 @@ myConnector.getData = function (table, doneCallback) {
 			"method": "GET",
 			"headers": {
 					"Accept": "application/json, application/json",
-    				"Content-Type": "application/json",
-    				"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-    				"Cache-Control": "no-cache",
-    				"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
-						}
+    					"Content-Type": "application/json",
+    					"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+    					"Cache-Control": "no-cache",
+    					"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
 					}
+			}
 	
 	$.ajax(settings).done(function (response) {
 		$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
         	var feat = response.results;
-        	var tableData = [];
+        	//var tableData = [];
 	});
 	});
 	
@@ -118,7 +118,7 @@ myConnector.getData = function (table, doneCallback) {
 			
 //Iterate the JSON object
 	for ( i = 0, len = feat.length; i < len; i++) {
-			tableData.push({
+			timekeepingEntriesTable.push({
 					"status": feat[i].status,
 					"foreman": feat[i].foreman,
 					"is_approved": feat[i].is_approved,
@@ -129,7 +129,7 @@ myConnector.getData = function (table, doneCallback) {
 				});
 			}
 		
-		table.appendRows(tableData);
+		table.appendRows(timekeepingEntriesTable);
 		doneCallback();
 	};
 		
