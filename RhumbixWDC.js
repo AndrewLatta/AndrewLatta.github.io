@@ -104,8 +104,8 @@ myConnector.getData = function (table, doneCallback) {
 					}
 			}
 	
-	$.ajax(settings).done(function (response) {
-		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(response) {
+	$.ajax(settings).done(function (results) {
+		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(results) {
         	
         	//var tableData = [];
 	});
