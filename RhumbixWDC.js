@@ -46,7 +46,6 @@ var myConnector = tableau.makeConnector();
 //2:-------------------------------------------------------------------------------------------
 // Define the schema
 myConnector.getSchema = function (schemaCallback) {
-	var schema = [];
 	
 	var timekeepingEntries_cols = [{
 		id: "status",
@@ -79,9 +78,7 @@ myConnector.getSchema = function (schemaCallback) {
 		columns: timekeepingEntries_cols
 	};
 	
-	schema.push(timekeepingEntriesTable);
-	
-	schemaCallback([schema]);
+	schemaCallback([timekeepingEntriesTable]);
 };
 
 //3:-------------------------------------------------------------------------------------------
@@ -108,7 +105,7 @@ myConnector.getData = function (table, doneCallback) {
 			}
 	
 	$.ajax(settings).done(function (response) {
-		$.getJSON("https://platform.rhumbix.com/public_api/v2/timekeeping_entries/", function(response) {
+		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(response) {
         	var feat = response.results;
         	//var tableData = [];
 	});
@@ -118,7 +115,7 @@ myConnector.getData = function (table, doneCallback) {
 			
 //Iterate the JSON object
 	for ( i = 0, len = feat.length; i < len; i++) {
-			timekeepingEntriesTable.push({
+				tableData.push({
 					"status": feat[i].status,
 					"foreman": feat[i].foreman,
 					"is_approved": feat[i].is_approved,
@@ -129,7 +126,7 @@ myConnector.getData = function (table, doneCallback) {
 				});
 			}
 		
-		table.appendRows(timekeepingEntriesTable);
+		table.appendRows(tableData);
 		doneCallback();
 	};
 		
