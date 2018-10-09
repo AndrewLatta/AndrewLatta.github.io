@@ -55,7 +55,7 @@ myConnector.getSchema = function (schemaCallback) {
 		dataType: tableau.dataTypeEnum.string
 	}, {
 		id: "is_approved",
-		dataType: tableau.dataTypeEnum.bool
+		dataType: tableau.dataTypeEnum.boolean
 	}, {
 		id: "end_time",
 		dataType: tableau.dataTypeEnum.string
@@ -83,67 +83,46 @@ myConnector.getSchema = function (schemaCallback) {
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
-myConnector.getData = function (table, doneCallback) { 
-	
+myConnector.getData = function (table, doneCallback) {
 	//var dataToReturn = [];
 	//var hasMoreData = false;
 	
 	//var accessToken = tableau.password;
 	//var connectionUri = getRhumbixURI(accessToken);
-	var url = "//prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1";
-	var getJSON = function(url) {
-		return new Promise(function(resolve, reject)
-			var xhr = new XMLHttpRequest();
-			var settings = {
-				"async": true,
-				"crossDomain": true,
-				"url": "//prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
-				"method": "GET",
-				"headers": {
-						"Accept": "application/json, application/json",
+	
+	var settings = {
+			"async": "true",
+			"crossDomain": "true",
+			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
+			"method": "GET",
+			"headers": {
+					"Accept": "application/json, application/json",
     					"Content-Type": "application/json",
     					"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
     					"Cache-Control": "no-cache",
     					"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
-						}
-					};
-			xhr.open('GET', url, true);
-			xhr.responseType = 'json';
-			xhr.onload = function() {
-				var status = xhr.status;
-				if (status == 200) {
-					resolve(xhr.response);
-				} else {
-					console.log("Something went wrong with the destination")
-					reject(status);
-				}
-			};
-			xhr.send();
-		)};
+					}
+			}
 	
-	
-	
-	$.ajax(settings).done(function (response) {
-		console.log(response);
-		
-		//$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(response) {
+	$.ajax(settings).done(function (results) {
+		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(results) {
+        	
+        	//var tableData = [];
 	});
-		//});
+	});
 	
-	var resu = response.results,
-		tableData = [];
+	var feat = response.results;
 			
 //Iterate the JSON object
-	for ( i = 0, len = resu.length; i < len; i++) {
+	for ( i = 0, len = feat.length; i < len; i++) {
 				tableData.push({
-					"status": resu[i].status,
-					"foreman": resu[i].foreman,
-					"is_approved": resu[i].is_approved,
-					"end_time": resu[i].end_time,
-					"start_time": resu[i].start_time,
-					"employee": resu[i].employee,
-					"job_number": resu[i].job_number,
-					"cost_code": resu[i].cost_code
+					"status": feat[i].status,
+					"foreman": feat[i].foreman,
+					"is_approved": feat[i].is_approved,
+					"end_time": feat[i].end_time,
+					"start_time": feat[i].start_time,
+					"employee": feat[i].employee,
+					"job_number": feat[i].job_number
 				});
 			}
 		
