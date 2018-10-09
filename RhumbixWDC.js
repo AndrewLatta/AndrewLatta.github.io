@@ -92,7 +92,7 @@ myConnector.getData = function (table, doneCallback) {
 	
 	var settings = {
 			"async": true,
-			"crossDomain": true"
+			"crossDomain": true,
 			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 			"method": "GET",
 			"headers": {
@@ -104,25 +104,25 @@ myConnector.getData = function (table, doneCallback) {
 					}
 			}
 	
-	$.ajax(settings).done(function (results) {
-		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(results) {
+	$.ajax(settings).done(function (response) {
+		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(response) {
         	
-        	//var tableData = [];
+        	var tableData = [];
 	});
 	});
 	
-	var feat = response.results;
+	var resp = response.results;
 			
 //Iterate the JSON object
-	for ( i = 0, len = feat.length; i < len; i++) {
+	for ( i = 0, len = resp.length; i < len; i++) {
 				tableData.push({
-					"status": feat[i].status,
-					"foreman": feat[i].foreman,
-					"is_approved": feat[i].is_approved,
-					"end_time": feat[i].end_time,
-					"start_time": feat[i].start_time,
-					"employee": feat[i].employee,
-					"job_number": feat[i].job_number
+					"status": resp[i].status,
+					"foreman": resp[i].foreman,
+					"is_approved": resp[i].is_approved,
+					"end_time": resp[i].end_time,
+					"start_time": resp[i].start_time,
+					"employee": resp[i].employee,
+					"job_number": resp[i].job_number
 				});
 			}
 		
