@@ -55,7 +55,7 @@ myConnector.getSchema = function (schemaCallback) {
 		dataType: tableau.dataTypeEnum.string
 	}, {
 		id: "is_approved",
-		dataType: tableau.dataTypeEnum.boolean
+		dataType: tableau.dataTypeEnum.bool
 	}, {
 		id: "end_time",
 		dataType: tableau.dataTypeEnum.string
@@ -83,17 +83,35 @@ myConnector.getSchema = function (schemaCallback) {
 
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
-myConnector.getData = function (table, doneCallback) {
+myConnector.getData = function (table, doneCallback) { 
+	
 	//var dataToReturn = [];
 	//var hasMoreData = false;
 	
 	//var accessToken = tableau.password;
 	//var connectionUri = getRhumbixURI(accessToken);
 	
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '/server', true);
+
+// If specified, responseType must be empty string or "text"
+	xhr.responseType = 'text';
+
+	xhr.onload = function () {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200) {
+				console.log(xhr.response);
+				console.log(xhr.responseText);
+			}
+		}
+	};
+
+	xhr.send(null);
+	
 	var settings = {
-			"async": "true",
-			"crossDomain": "true",
-			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
+			"async": true,
+			"crossDomain": true,
+			"url": "//prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 			"method": "GET",
 			"headers": {
 					"Accept": "application/json, application/json",
@@ -104,17 +122,18 @@ myConnector.getData = function (table, doneCallback) {
 					}
 			}
 	
-	$.ajax(settings).done(function (results) {
-		$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(results) {
-        	
-        	//var tableData = [];
+	$.ajax(settings).done(function (response) {
+		console.log(response);
+		
+		//$.getJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1", function(results) {
+		//var tableData = [];
 	});
-	});
+		//});
 	
-	var feat = response.results;
+	//var feat = results.results;
 			
 //Iterate the JSON object
-	for ( i = 0, len = feat.length; i < len; i++) {
+	for ( i = 0, len = results.length; i < len; i++) {
 				tableData.push({
 					"status": feat[i].status,
 					"foreman": feat[i].foreman,
