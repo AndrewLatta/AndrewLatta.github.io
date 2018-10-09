@@ -109,7 +109,6 @@ myConnector.getData = function (table, doneCallback) {
         	
         	var tableData = [];
 	});
-	});
 	
 	var resp = response.results;
 			
@@ -128,6 +127,8 @@ myConnector.getData = function (table, doneCallback) {
 		
 		table.appendRows(tableData);
 		doneCallback();
+	
+		};
 	};
 		
 
