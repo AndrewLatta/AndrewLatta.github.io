@@ -55,7 +55,7 @@ myConnector.getSchema = function (schemaCallback) {
 		dataType: tableau.dataTypeEnum.string
 	}, {
 		id: "is_approved",
-		dataType: tableau.dataTypeEnum.boolean
+		dataType: tableau.dataTypeEnum.bool
 	}, {
 		id: "end_time",
 		dataType: tableau.dataTypeEnum.string
@@ -91,8 +91,8 @@ myConnector.getData = function (table, doneCallback) {
 	//var connectionUri = getRhumbixURI(accessToken);
 	
 	var settings = {
-			"async": "true",
-			"crossDomain": "true",
+			"async": true,
+			"crossDomain": true"
 			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/?page_size=1000&page=1",
 			"method": "GET",
 			"headers": {
