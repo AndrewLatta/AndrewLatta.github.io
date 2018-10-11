@@ -91,16 +91,16 @@ myConnector.getData = function (table, doneCallback) {
 	//var connectionUri = getRhumbixURI(accessToken);
 	
 	var settings = {
-			"async": true,
-			"crossDomain": true,
-			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
-			"method": "GET",
-			"headers": {
-					"Accept": "application/json, application/json",
-    					"Content-Type": "application/json",
-    					"x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-    					"Cache-Control": "no-cache",
-    					"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
+			async: true,
+			crossDomain: true,
+			url: "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
+			method: "GET",
+			headers: {
+					Accept: "application/json, application/json",
+    					Content-Type: "application/json",
+    					x-api-key: "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+    					Cache-Control: "no-cache",
+    					Postman-Token: "f90b9c6b-67d5-4ab6-af04-05651294a558"
 					}
 			}
 	
