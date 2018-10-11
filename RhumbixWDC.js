@@ -107,7 +107,7 @@ myConnector.getData = function (table, doneCallback) {
 	$.ajax(settings).done(function (response) {
         	console.log(response);
         	var tableData = [];
-	});
+	
 	
 	var resp = response.results;
 			
@@ -126,6 +126,8 @@ myConnector.getData = function (table, doneCallback) {
 		
 		table.appendRows(tableData);
 		doneCallback();
+		
+		});
 	};
 		
 
