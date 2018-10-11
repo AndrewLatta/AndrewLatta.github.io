@@ -128,7 +128,7 @@ myConnector.getData = function (table, doneCallback) {
 		table.appendRows(tableData);
 		doneCallback();
 	
-		};
+		});
 	};
 		
 
