@@ -90,6 +90,12 @@ myConnector.getData = function (table, doneCallback) {
 	//var accessToken = tableau.password;
 	//var connectionUri = getRhumbixURI(accessToken);
 	
+	function setup(){
+		
+		loadJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/", gotData, 'jsonp');	
+		}
+	
+	
 	var settings = {
 			"async": true,
 			"crossDomain": true,
@@ -104,9 +110,11 @@ myConnector.getData = function (table, doneCallback) {
 					}
 			}
 	
-	$.ajax(settings).done(function (response) {
-        	console.log(response);
-        	var tableData = [];
+	function gotData(data) {
+	
+		$.ajax(settings).done(function (response) {
+        		console.log(response);
+        		var tableData = [];
 	
 	
 	var resp = response.results;
@@ -129,54 +137,7 @@ myConnector.getData = function (table, doneCallback) {
 		
 		});
 	};
-		
-
-// myConnector.init = function(initCallback) {  
-// 	tableau.authType = tableau.authTypeEnum.custom;
-// 	tableau.connectionName = "Rhumbix WDC";
-// 
-// 	tableau.log("phase: " + tableau.phase);
-// 
-// 	initCallback();
-// 
-// 	if (tableau.phase == tableau.phaseEnum.authPhase || tableau.phase == tableau.phaseEnum.interactivePhase) {
-//             var accessToken = tableau.password;
-//             if (accessToken && (accessToken.length > 0)) {
-//                 // If we have an access token, we are done with auth.
-//                 tableau.log("have access token; calling submit()");
-//                 tableau.submit(myConnector);
-//             } else {
-//                 // If we have this cookie, then we are being called back after
-//                 // the sign-in page and we need to exchange a request
-//                 // token for an access token.
-//                 tableau.log("no access token");
-//                 var oauthTokenSecret = Cookies.get("oauth_token_secret");
-//                 if (oauthTokenSecret && (oauthTokenSecret.length > 0)) {
-//                     // If redirected here from the oauth sign-in page, there will be an
-//                     // oauth_token query param on our URL.
-//                     tableau.log("found cookie; calling getAccessToken()");
-//                     var params = parseQueryParams(window.location.href);
-//                     var accessToken = getAccessToken(params);
-//                     var token = {
-//                         public: accessToken.oauth_token,
-//                         secret: accessToken.oauth_token_secret,
-//                     };
-// 
-//                     tableau.username = decodeURIComponent(accessToken.user_nsid);
-//                     tableau.password = JSON.stringify(token);
-//                     tableau.submit();
-//                 } else {
-//                     // We don't have an access token and we aren't being called
-//                     // back from sign-in page, we need to navigate to the
-//                     // sign-in page.
-//                     tableau.log("did not find cookie; redirecting to sign-in page");
-//                     var oauthUrl = getOauthUrl();
-//                     window.location.href = oauthUrl;
-// 				}
-// 			}
-// 		}
-// 	};
-		
+	};	
 
 //4:-------------------------------------------------------------------------------------------
 	tableau.registerConnector(myConnector);
@@ -201,26 +162,3 @@ myConnector.getData = function (table, doneCallback) {
 			});
 		});
 	})();
-	// $(document).ready(function(){
-		// $("#submitButton").click(function(){
-			
-			// var settings = {
-				// "async": true,
-				// "Accept": JSON,
-				// "Access-Control-Allow-Origin": "*",
-				// "Access-Control-Allow-Headers": true,
-				// "crossDomain": true,
-				// "url": "https://crossorigin.me/https://platform.rhumbix.com/public_api/v2/timekeeping_entries/",
-				// "method": "GET",
-				// "headers": {
-					// "x-api-key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-					// "Cache-Control": "no-cache",
-					// "Postman-Token": "f50d85c4-2932-4e95-9f5f-4a34b05dd7bf"
-					// }
-					// };
-	
-	// $.ajax(settings).done(function (response) {
-		// console.log(response);
-		// });
-	// });
-// });
