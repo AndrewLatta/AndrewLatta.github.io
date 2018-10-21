@@ -3,45 +3,7 @@
 //1:-------------------------------------------------------------------------------------------
 // Create the connector object
 var myConnector = tableau.makeConnector();
-	
-// errorMethod = function(response) {
-// 		tableau.abortWithError(JSON.stringify(response));
-//     };
-// 
-// 	if (!Object.assign) {
-// 	  Object.defineProperty(Object, 'assign', {
-// 		enumerable: false,
-// 		configurable: true,
-// 		writable: true,
-// 		value: function(target) {
-// 		  'use strict';
-// 		  if (target === undefined || target === null) {
-// 			throw new TypeError('Cannot convert first argument to object');
-// 		  }
-// 
-// 		  var to = Object(target);
-// 		  for (var i = 1; i < arguments.length; i++) {
-// 			var nextSource = arguments[i];
-// 			if (nextSource === undefined || nextSource === null) {
-// 			  continue;
-// 			}
-// 			nextSource = Object(nextSource);
-// 
-// 			var keysArray = Object.keys(Object(nextSource));
-// 			for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-// 			  var nextKey = keysArray[nextIndex];
-// 			  var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-// 			  if (desc !== undefined && desc.enumerable) {
-// 				to[nextKey] = nextSource[nextKey];
-// 			  }
-// 			}
-// 		  }
-// 		  return to;
-// 		}
-// 	  });
-// 	};
 
-//	var options = new Object();
 
 //2:-------------------------------------------------------------------------------------------
 // Define the schema
@@ -84,24 +46,13 @@ myConnector.getSchema = function (schemaCallback) {
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
-	//var dataToReturn = [];
-	//var hasMoreData = false;
-	
-	//var accessToken = tableau.password;
-	//var connectionUri = getRhumbixURI(accessToken);
-	
-	function setup(){
-		
-		loadJSON("https://prod.rhumbix.com/public_api/v2/timekeeping_entries/", gotData, 'jsonp');	
-		}
-	
 	
 	var settings = {
 			"async": true,
 			"crossDomain": true,
 			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
 			"method": "GET",
-			"Access-Control-Allow-Headers": {
+			"headers": {
 					"Accept": "application/json, application/json",
     					"Content-Type": "application/json",
     					"X-Api-Key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
@@ -110,17 +61,15 @@ myConnector.getData = function (table, doneCallback) {
 					}
 			}
 	
-	function gotData(data) {
-	
-		$.ajax(settings).done(function (response) {
-        		console.log(response);
-        		var tableData = [];
-	
-	
-	var resp = response.results;
+	$.ajax(settings, {
+		jsonp: 'callback',
+		dataType: 'jsonp',
+		}).then(function(response) {
+			var resp = response.results,
+        			tableData = [];
 			
-//Iterate the JSON object
-	for ( i = 0, len = resp.length; i < len; i++) {
+			//Iterate the JSON object
+			for ( i = 0, len = resp.length; i < len; i++) {
 				tableData.push({
 					"status": resp[i].status,
 					"foreman": resp[i].foreman,
@@ -129,14 +78,14 @@ myConnector.getData = function (table, doneCallback) {
 					"start_time": resp[i].start_time,
 					"employee": resp[i].employee,
 					"job_number": resp[i].job_number
-				});
-			}
+						});
+					}
 		
-		table.appendRows(tableData);
-		doneCallback();
+			table.appendRows(tableData);
+			doneCallback();
 		
+			});
 		});
-	};
 	};	
 
 //4:-------------------------------------------------------------------------------------------
