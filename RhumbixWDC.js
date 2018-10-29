@@ -50,7 +50,7 @@ myConnector.getData = function (table, doneCallback) {
 	var settings = {
 			"async": true,
 			"crossDomain": true,
-			"url": "https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
+			"url": "https://cors-anywhere.herokuapp.com/https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
 			"method": "GET",
 			"headers": {
 					"Accept": "application/json, application/json",
