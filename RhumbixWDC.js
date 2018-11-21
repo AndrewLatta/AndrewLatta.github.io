@@ -43,23 +43,23 @@ myConnector.getSchema = function (schemaCallback) {
 	schemaCallback([timekeepingEntriesTable]);
 };
 
+
+var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": "https://cors-anywhere.herokuapp.com/https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
+		"method": "GET",
+		"headers": {
+				"Accept": "application/json, application/json",
+						"Content-Type": "application/json",
+						"X-Api-Key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
+						"Cache-Control": "no-cache",
+						"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
+				}
+		};
 //3:-------------------------------------------------------------------------------------------
 // Fetch and download the data
 myConnector.getData = function (table, doneCallback) {
-	
-	var settings = {
-			"async": true,
-			"crossDomain": true,
-			"url": "https://cors-anywhere.herokuapp.com/https://prod.rhumbix.com/public_api/v2/timekeeping_entries/",
-			"method": "GET",
-			"headers": {
-					"Accept": "application/json, application/json",
-    					"Content-Type": "application/json",
-    					"X-Api-Key": "UVTRjPcDWO5fpeHI7DMpl1XgGjXMBCfF9hfsNVkB",
-    					"Cache-Control": "no-cache",
-    					"Postman-Token": "f90b9c6b-67d5-4ab6-af04-05651294a558"
-					}
-			}
 	
 	$.ajax(settings, {
 		jsonp: 'callback',
